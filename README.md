@@ -1,6 +1,3 @@
-# crypto-client-project
-Professional landing page developed for a cryptocurrency client, focused on high conversion, security-first design, and fully responsive layout.
-
 # Crypto Asset Landing Page 🚀
 
 A high-performance, professional landing page developed for a client in the cryptocurrency sector. This project was designed to convey trust and security, essential elements in the crypto market.
