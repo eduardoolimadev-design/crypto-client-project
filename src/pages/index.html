@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayerCapy | The Next Gen L3</title>
+    <meta name="description" content="Scalable, fast, and community-owned Layer 3 solution for the next generation of gaming.">
+
+    <style>
+        /* RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            /* SEU GRADIENTE */
+            background-image: linear-gradient(to right, #00C6FF, #2b0838 50%, #9d00ff) !important;
+            background-color: #2b0838;
+            color: #ffffff;
+            /* MUDANÇA IMPORTANTE AQUI: */
+            min-height: 100vh; /* Altura mínima da tela inteira */
+            display: flex;
+            flex-direction: column; /* Organiza itens em coluna */
+            overflow-x: hidden; /* Evita rolagem lateral */
+        }
+
+        /* CONTAINER CENTRAL (Ocupa o espaço disponível) */
+        .container {
+            flex-grow: 1; /* Faz o container crescer para ocupar o meio */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centraliza verticalmente */
+            align-items: center; /* Centraliza horizontalmente */
+
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            margin: 0 auto; /* Garante centro absoluto */
+            animation: fadeIn 1.5s ease-in-out;
+            z-index: 2;
+        }
+
+        /* LOGO / IMAGEM */
+        .hero-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #00ffcc;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+            margin-bottom: 30px;
+        }
+
+        /* TEXTOS */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        /* BOTÃO MÁGICO */
+        .enter-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #000;
+            background-color: #00ffcc;
+            text-decoration: none;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
+            border: 2px solid #00ffcc;
+        }
+
+            .enter-btn:hover {
+                background-color: transparent;
+                color: #00ffcc;
+                box-shadow: 0 0 30px rgba(0, 255, 204, 0.9);
+                transform: scale(1.05);
+            }
+
+        /* RODAPÉ (AGORA VAI FICAR NO LUGAR CERTO) */
+        .footer-legal {
+            flex-shrink: 0; /* Impede que o rodapé suma */
+            width: 100%;
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 15px 10px; /* Espaço para respirar no fundo */
+            z-index: 1;
+        }
+
+        /* ANIMAÇÃO */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-img {
+                width: 120px;
+                height: 120px;
+            }
+
+            body {
+                background-image: linear-gradient(to bottom, #00C6FF, #2b0838, #9d00ff) !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="assets/img/logo.png" alt="LayerCapy Logo" class="hero-img">
+
+        <h1>The Next Layer<br>of Innovation</h1>
+
+        <p>
+            Scalable infrastructure built for the decentralized gaming future.<br>
+            Secure. Fast. Community-Driven.
+        </p>
+
+        <a href="home.html" class="enter-btn">
+            Enter Universe 🚀
+        </a>
+    </div>
+
+    <div class="footer-legal">
+        © 2025 LayerCapy Foundation. All rights reserved. <br>
+        This page is for informational purposes only.
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,2461 @@
+---
+title: LayerCapy - Ethereum’s Next Layer of Innovation
+bodyClass: bg-success-emphasis overflow-x-hidden
+navBtnClass: fw-bold text-heading
+primary-header: "primary-header--light primary-header--boxed primary-header--fixed top-3 primary-header-crossed:top-0 primary-header-crossed:full-light"
+layout: "single-page"
+---
+
+<style>
+    /* Estilo do Preloader com Gradiente */
+    #preloader, .preloader, .loader-wrapper {
+        /* Gradiente: Azul Brilhante -> Roxo Escuro (no meio) -> Roxo Magenta */
+        background-image: linear-gradient( to right, #00C6FF, /* $azul-brilhante (Exemplo) */
+        #2b0838 50%, /* $roxo-escuro (Exemplo) */
+        #9d00ff /* $roxo-magenta (Exemplo) */
+        ) !important;
+        /* Garante que cubra tudo */
+        background-color: transparent !important;
+    }
+</style>
+
+<div id="genesis-popup" class="popup-overlay">
+    <div class="popup-content">
+        <button class="close-btn" onclick="closePopup()">X</button>
+
+        <div class="popup-header">
+            <h2>🎉 YOU ARE JUST IN TIME</h2>
+        </div>
+
+        <div class="popup-body">
+            <h3 style="
+    white-space: nowrap;
+    font-size: clamp(1rem, 4vw, 2.5rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Estilos do Gradiente Natalino */
+    background: linear-gradient(90deg, #ff3333 0%, #00cc00 50%, #ff3333 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; /* Padrão moderno */
+    color: transparent; /* Fallback necessário */
+    font-weight: 800; /* Deixa mais grosso para o gradiente aparecer melhor */
+">
+                ⚡ YEAR-END OFFER ⚡
+            </h3>
+            <p>
+                All early adopters who acquire tokens by <span class="highlight">Jan 01, 2026</span>
+                will receive an <strong>AUTOMATIC +30% BOOST</strong> in their wallet at end offer.
+            </p>
+
+            <div class="countdown-container">
+                <p>Offer ends in:</p>
+                <div id="countdown" class="timer">
+                    <div><span id="days">00</span><small>Days</small></div>
+                    <div><span id="hours">00</span><small>Hours</small></div>
+                    <div><span id="minutes">00</span><small>Mins</small></div>
+                    <div><span id="seconds">00</span><small>Secs</small></div>
+                </div>
+            </div>
+
+            <button class="cta-btn" onclick="closePopup()">CLAIM MY BOOST</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Dark Transparent Background */
+    .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+    }
+
+    /* Popup Box */
+    .popup-content {
+        background: #0a0a12;
+        border: 2px solid #00f3ff; /* Neon Blue Border */
+        box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+        padding: 2rem;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 500px;
+        text-align: center;
+        position: relative;
+        color: #fff;
+        font-family: 'Courier New', Courier, monospace; /* Tech Font */
+        animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    /* Close Button */
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: none;
+        border: none;
+        color: #666;
+        font-size: 1.5rem;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+        .close-btn:hover {
+            color: #fff;
+        }
+
+    /* Typography */
+    .popup-header h2 {
+        color: #00f3ff;
+        margin-top: 0;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+    }
+
+    .highlight {
+        color: #fceb00; /* Cyberpunk Yellow */
+        font-weight: bold;
+    }
+
+    .popup-body p {
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #e0e0e0;
+    }
+
+    /* Countdown Styles */
+    .countdown-container {
+        margin: 20px 0;
+        background: rgba(0, 243, 255, 0.1);
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px dashed #00f3ff;
+    }
+
+    .timer {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #fff;
+    }
+
+        .timer small {
+            display: block;
+            font-size: 0.7rem;
+            color: #aaa;
+            font-weight: normal;
+            text-transform: uppercase;
+        }
+
+    /* CTA Button */
+    .cta-btn {
+        background: #00f3ff;
+        color: #000;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: 0.3s;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+        .cta-btn:hover {
+            background: #fff;
+            box-shadow: 0 0 15px #00f3ff;
+        }
+</style>
+
+<script>
+    // 1. Set the Deadline (Jan 1, 2026)
+    const countDate = new Date("Jan 1, 2026 00:00:00").getTime();
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const gap = countDate - now;
+
+        // Time calculations
+        const second = 1000;
+        const minute = second * 60;
+        const hour = minute * 60;
+        const day = hour * 24;
+
+        const d = Math.floor(gap / day);
+        const h = Math.floor((gap % day) / hour);
+        const m = Math.floor((gap % hour) / minute);
+        const s = Math.floor((gap % minute) / second);
+
+        // Update HTML elements
+        document.getElementById('days').innerText = d < 10 ? '0' + d : d;
+        document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
+        document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
+        document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
+    }
+
+    // Update every second
+    setInterval(updateCountdown, 1000);
+
+    // Close Popup Function
+    function closePopup() {
+        document.getElementById('genesis-popup').style.display = 'none';
+    }
+</script>
+
+<!-- Navbar  -->
+<header class="navbar navbar-expand-lg primary-header {{primary-header}}">
+    <div class="container align-items-lg-center">
+        <!-- Logo -->
+        <a class="logo" href="index.html">
+            <img src="{{root}}assets/img/logo-yellow.png"
+                 alt="image"
+                 class="logo__img logo__img--light"
+                 style="max-height: 65px; margin-left: 50px" />
+        </a>
+        <!-- Logo End-->
+        <!-- Mobile Menu Toggler -->
+        <button class="navbar-toggler border-0"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbar0"
+                aria-controls="navbar0"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <iconify-icon icon="solar:hamburger-menu-line-duotone"></iconify-icon>
+        </button>
+        <!-- Mobile Menu Toggler End-->
+        <!-- Menu -->
+        <nav class="collapse navbar-collapse" id="navbar0">
+            <ul class="navbar-nav flex-grow-1 justify-content-center mx-lg-4 mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#about-section">
+                        About
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#how-to-buy-section">
+                        How to Buy
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#road-map-section">
+                        Road Map
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#tokenomics-section">
+                        Tokenomics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#faq-section"> FAQ </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="assets/documents/Whitepaper.pdf"> Whitepaper </a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center gap-3 ms-lg-auto">
+                <a href="#"
+                   onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;"
+                   class="btn btn-light{{#if navBtnClass}} {{navBtnClass}} {{/if}}">
+                    Buy Token
+                </a>
+            </div>
+        </nav>
+        <!-- Menu End -->
+    </div>
+</header>
+<!-- Navbar End -->
+
+<div id="smooth-wrapper">
+    <div id="smooth-content">
+        <!-- Hero -->
+        <div class="hero-3 overflow-hidden">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <span class="d-inline-block mb-4 text-secondary fs-24 text-stroke gsap-text-animation notranslate" translate="no" " data-delay="1" data-split-type="words">
+                            Ethereum’s Next Layer of Innovation
+                        </span>
+                        <h1 class="hero-1__title mb-10 text-light text-stroke-md text-shadow-md gsap-text-animation notranslate" translate="no" " data-delay="1.25" data-split-type="words">
+                            THE GAS BUSTER
+                        </h1>
+
+                        <div class="d-flex align-items-center flex-wrap gap-4">
+                            <a href="https://x.com/LayerCapy" class="btn btn-lg btn-secondary text-heading align-items-center rounded gsap-fade-in notranslate" translate="no" " data-delay="1.5" data-y="50">
+                                <iconify-icon icon="simple-icons:x" class="icon-left" width="22" height="22"></iconify-icon>
+                                <span class="d-inline-block ff-1">Follow!</span>
+                            </a>
+                            <a href="https://t.me/LayerCapyNews" class="btn btn-lg btn-light text-heading align-items-center rounded gsap-fade-in notranslate" translate="no" style="position: relative; z-index: 10;" data-delay="1.75" data-y="50">
+                                <iconify-icon icon="mdi:telegram" class="icon-left" width="30" height="30"></iconify-icon>
+                                <span class="d-inline-block ff-1">Join TG!</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="token-card-2 bg-secondary rounded-5 p-4 px-sm-6 px-xl-8 px-xxl-12 pt-sm-12 pb-sm-30 gsap-fade-in" style="position: relative; z-index: 10;" data-delay="2">
+                            <h5 class="text-light text-stroke text-center overflow-hidden">
+                                <span class="d-inline-block position-relative text-splash text-splash--2x text-splash--dark">
+                                    UNTIL PRICE RISE
+                                </span>
+                            </h5>
+
+                            <div class="bg-light border border-dark shadow-sharp rounded-4 p-4">
+                                <div class="countdown-custom d-flex align-items-center justify-content-center gap-3 gap-sm-6 gap-lg-4 gap-xl-6 flex-wrap">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span class="days counter-1__text text-heading lh-1/2" id="cd_days">30</span>
+                                        <span class="d-block"> DAYS </span>
+                                    </div>
+
+                                    <span class="counter-1__text text-heading">:</span>
+
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span class="hours counter-1__text text-heading lh-1/2" id="cd_hours">00</span>
+                                        <span class="d-block"> HOURS </span>
+                                    </div>
+
+                                    <span class="counter-1__text text-heading">:</span>
+
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span class="minutes counter-1__text text-heading lh-1/2" id="cd_minutes">00</span>
+                                        <span class="d-block"> MINS </span>
+                                    </div>
+
+                                    <span class="counter-1__text text-heading">:</span>
+
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span class="seconds counter-1__text text-heading lh-1/2" id="cd_seconds">00</span>
+                                        <span class="d-block"> SECS </span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <span class="d-block text-center fs-18 text-heading my-6">
+                                USDT RAISED : <span id="totalRaisedDisplay">$0.00</span> / <span id="phaseTargetDisplay">$100,000</span>
+                            </span>
+
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="d-block h6 m-0 text-light text-stroke text-shadow">
+                                    Current Phase: <span id="currentPhaseDisplay">0</span>
+                                </span>
+
+                                <span class="d-block h6 m-0 text-light text-stroke text-shadow" id="progressPercentage">0%</span>
+                            </div>
+
+                            <div class="progress mt-3">
+                                <div class="progress-bar" id="progressBar" role="progressbar" style="width: 0%"></div>
+                            </div>
+
+                            <h5 class="text-heading text-center overflow-hidden mt-8">
+                                <span class="d-inline-block position-relative text-splash text-splash--2x text-splash--dark">
+                                    1 $LCAPY = <span id="capyPriceDisplay">$0.003254895</span>
+                                </span>
+                            </h5>
+
+                            <ul class="list list-row gap-3 flex-wrap justify-content-center mb-6">
+                                <li><a href="https://www.binance.com/" class="btn btn-sm btn-light text-heading align-items-center rounded notranslate" translate="no"><iconify-icon icon="token:binance" class="fs-24"></iconify-icon> BINANCE </a></li>
+                                <li><a href="https://www.kucoin.com/" class="btn btn-sm btn-light text-heading align-items-center rounded"><iconify-icon icon="token:kucoin" class="fs-24"></iconify-icon> KUCOIN </a></li>
+                                <li><a href="https://www.bybit.com/" class="btn btn-sm btn-light text-heading align-items-center rounded"><iconify-icon icon="simple-icons:builtbybit" class="fs-24"></iconify-icon> BYBIT </a></li>
+                                <li><a href="https://bingx.com/" class="btn btn-sm btn-light text-heading align-items-center rounded"><iconify-icon icon="token:bitcoin" class="fs-24"></iconify-icon> BINGX </a></li>
+                            </ul>
+
+                            <div class="row gx-4 gy-6">
+                                <div class="col-md-6">
+                                    <span class="d-block text-heading fs-14 fw-bold ff-2 text-start">PAY IN</span>
+
+                                    <div class="input-group">
+
+                                        <button class="btn btn-lg bg-token-yellow text-heading dropdown-toggle rounded-start-3 shadow-sharp border border-dark border-end-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="currentPayInCurrency">
+                                            <iconify-icon icon="cryptocurrency-color:eth" id="currentPayInIcon"></iconify-icon>
+                                            <span id="currentPayInText">ETH</span>
+                                        </button>
+
+                                        <ul class="dropdown-menu" id="payInCurrencySelect">
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0)" data-currency="ETH">
+                                                    <iconify-icon icon="cryptocurrency-color:eth" class="currency-icon"></iconify-icon> ETH
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0)" data-currency="USDC">
+                                                    <iconify-icon icon="cryptocurrency-color:usdc" class="currency-icon"></iconify-icon> USDC
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                        <input type="number" id="payInAmount" class="form-control form-control-lg border border-dark rounded-end-3 shadow-sharp" value="0.1" min="0" step="any" aria-label="Amount to pay" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="d-block text-heading fs-14 fw-bold ff-2 text-start">RECEIVED IN</span>
+                                    <div class="input-group">
+
+                                        <span class="input-group-text bg-token-yellow text-heading rounded-start-3 shadow-sharp border border-dark border-end-0">
+                                            <img src="assets/img/lcapy-logo.png"
+                                                 alt="LCAPY Icon"
+                                                 style="width: 25px; height: 25px; object-fit: contain; margin-right: 8px; vertical-align: middle;">
+                                            LCAPY
+                                        </span>
+
+                                        <input type="text" id="receivedAmount" class="form-control form-control-lg border border-dark rounded-end-3 shadow-sharp" value="0" readonly aria-label="Amount received" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-4 gy-6 mb-6">
+                            </div>
+
+                            <div class="d-flex flex-column gap-3 w-100">
+
+                                <button type="button" id="btn-buy-token"
+                                        class="btn btn-lg align-items-center rounded w-100 justify-content-center text-light"
+                                        style="display: none !important; border: 2px solid black; cursor: pointer; padding-top: 12px; padding-bottom: 12px; background-color: #28a745;">
+                                    <span class="d-inline-block ff-1" style="font-size: 30px; font-weight: 900; -webkit-text-stroke: 1px black;">
+                                        Buy Token
+                                    </span>
+                                </button>
+
+                                <div class="d-flex align-items-center justify-content-center mt-3 notranslate" translate="no">
+                                    <button type="button"
+                                            class="btn btn-lg align-items-center rounded w-100 justify-content-center text-light js-connect-wallet"
+                                            style="border: 2px solid black; cursor: pointer; padding-top: 12px; padding-bottom: 12px; background-color: #8A2BE2;">
+                                        <span class="d-inline-block ff-1" style="font-size: 30px; font-weight: 900; -webkit-text-stroke: 1px black;">
+                                            Connect Wallet
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img src="assets/img/hero-img-3.png" alt="image" class="hero-3__img gsap-fade-in capy-responsivo" data-delay="2.25" data-y="25" data-dureation="2">
+                <div class="espaco-extra-mobile"></div>
+                <img src="assets/img/hero-img-3mobile.png" alt="image mobile" class="hero-3__img capy-mobile">
+                <img src="assets/img/shape/hero-bg-4.png" alt="image" class="img-fluid w-100 position-absolute start-0 z-n2 pointer-none gsap-fade-in hero-bg-custom" data-delay="3.5">
+                <img src="assets/img/shape/hero-element-15.png" alt="image" class="img-fluid hero-3__element hero-3__element--1 gsap-fade-in" data-delay="3.75" data-y="25">
+                <img src="assets/img/shape/hero-element-15.png" alt="image" class="img-fluid hero-3__element hero-3__element--3 gsap-fade-in" data-delay="4.25" data-y="25">
+            </div>
+            <!-- Hero End -->
+            <!-- Ticker -->
+            <div class="py-4 bg-secondary border-top border-bottom border-2x border-dark gsap-fade-in"
+                 data-scroll-trigger="true">
+                <div class="container-fluid p-0">
+                    <div class="row g-0">
+                        <div class="col-12">
+                            <div class="scroller-x" data-speed="slow" data-direction="left">
+                                <ul class="list list-row align-items-center gap-4 scroller-x__list">
+                                    <li>
+                                        <img src="{{root}}assets/img/icon-coin-3.png"
+                                             alt="image"
+                                             class="img-fluid" />
+                                    </li>
+                                    <li>
+                                        <h4 class="mb-0 text-dark">MORE FASTER AND CHEAPER</h4>
+                                    </li>
+                                    <li>
+                                        <img src="{{root}}assets/img/icon-coin-3.png"
+                                             alt="image"
+                                             class="img-fluid" />
+                                    </li>
+                                    <li>
+                                        <h4 class="mb-0 text-primary text-stroke text-shadow">
+                                            LAYER 3 SOLUTION
+                                        </h4>
+                                    </li>
+                                    <li>
+                                        <img src="{{root}}assets/img/icon-coin-3.png"
+                                             alt="image"
+                                             class="img-fluid" />
+                                    </li>
+                                    <li>
+                                        <h4 class="mb-0 text-dark">MORE FASTER AND CHEAPER</h4>
+                                    </li>
+                                    <li>
+                                        <img src="{{root}}assets/img/icon-coin-3.png"
+                                             alt="image"
+                                             class="img-fluid" />
+                                    </li>
+                                    <li>
+                                        <h4 class="mb-0 text-primary text-stroke text-shadow">
+                                            LAYER 3 SOLUTION
+                                        </h4>
+                                    </li>
+                                    <li>
+                                        <img src="{{root}}assets/img/icon-coin-3.png"
+                                             alt="image"
+                                             class="img-fluid" />
+                                    </li>
+                                    <li>
+                                        <h4 class="mb-0 text-dark">MORE FASTER AND CHEAPER</h4>
+                                    </li>
+                                    <li>
+                                        <img src="{{root}}assets/img/icon-coin-3.png"
+                                             alt="image"
+                                             class="img-fluid" />
+                                    </li>
+                                    <li>
+                                        <h4 class="mb-0 text-primary text-stroke text-shadow">
+                                            LAYER 3 SOLUTION
+                                        </h4>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Ticker End -->
+            <!-- About -->
+            <div id="about-section" class="about-section-1 section-space-y">
+                <div class="container">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-lg-4 d-none d-lg-block">
+                            <img src="{{root}}assets/img/about-img-3.png"
+                                 alt="image"
+                                 class="img-fluid gsap-fade-in"
+                                 data-scroll-trigger="true"
+                                 data-y="15" />
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="rounded-5 bg-secondary p-4 p-sm-8 p-md-18 py-xl-30 gsap-fade-in"
+                                 data-scroll-trigger="true"
+                                 data-start="80%"
+                                 data-y="25">
+                                <h2 class="text-light text-stroke text-shadow notranslate" translate="no">
+                                    WHAT IS LAYER CAPY
+                                </h2>
+                                <p class="mb-8 fs-18">
+                                    Layer Capy is more than just another crypto project, it’s the next layer of innovation. Built on Ethereum’s evolving ecosystem, Layer Capy represents a bold step forward: scalability, community, and creativity united in one token.
+
+                                    🚀 Scalable: designed to move faster and cheaper, breaking the limits of traditional gas fees.
+
+                                    🐾 Community-driven: inspired by the playful spirit of the capybara, it brings people together.
+
+                                    🔮 Innovative: positioned as a Layer 3 solution, it opens new possibilities for Metaverse, gaming, and beyond.
+
+                                    Layer Capy isn’t just a token, it’s a movement. The future of blockchain needs projects that are fun, accessible, and powerful. Layer Capy is here to be that bridge.
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-4">
+                                    <a href="javascript:void(0);"
+                                       onclick="window.scrollTo({top: 0, behavior: 'smooth'});"
+                                       class="btn btn-lg btn-success text-heading align-items-center rounded">
+                                        <iconify-icon icon="ic:twotone-thumb-up-off-alt"></iconify-icon>
+                                        <span class="d-inline-block ff-1">Buy Token</span>
+                                    </a>
+
+                                    <ul class="list list-row align-items-center flex-wrap gap-4">
+
+                                        <li>
+                                            <a href="https://x.com/LayerCapy"
+                                               class="btn btn-icon btn-light rounded-circle">
+                                                <iconify-icon icon="prime:twitter"></iconify-icon>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.instagram.com/layercapy/"
+                                               class="btn btn-icon btn-light rounded-circle">
+                                                <iconify-icon icon="uil:instagram"></iconify-icon>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://t.me/LayerCapyNews"
+                                               class="btn btn-icon btn-light rounded-circle">
+                                                <iconify-icon icon="mdi:telegram"></iconify-icon>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="d-flex align-items-center p-3 rounded bg-light border border-1x border-dark shadow-sharp mt-8">
+                                    <input type="text"
+                                           id="walletAddress"
+                                           class="form-control border-0 text-dark"
+                                           value="B7xavrAozTa1msQxu8YAcvPftf76x1fJYyLrYdTnbrah" />
+                                    <button type="button"
+                                            id="copyBtn"
+                                            class="btn btn-icon btn-secondary">
+                                        <iconify-icon icon="iconamoon:copy-light"></iconify-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img src="{{root}}assets/img/shape/about-img-1.png"
+                     alt="image"
+                     class="img-fluid w-100 position-absolute start-0 bottom-0 pointer-none"
+                     style="z-index: -1;" />
+            </div>
+            <!-- About End -->
+            <!-- How To Buy Section -->
+            <div id="how-to-buy-section" class="how-to-buy-section-2 section-space-y">
+                <div class="section-space-md-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="mb-0 text-center text-light text-stroke-md text-shadow-md fs-6vw gsap-text-animation"
+                                    data-scroll-trigger="true"
+                                    data-split-type="words">
+                                    HOW TO BUY
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-lg-8">
+                            <div class="row g-4 d-flex">
+                                <div class="col-md-6 gsap-fade-in"
+                                     data-scroll-trigger="true"
+                                     data-y="25">
+                                    <div class="token-card-3">
+                                        <h5>CREATE YOUR WALLET</h5>
+                                        <p class="mb-0 fs-18 text-heading">
+                                            Download a trusted crypto wallet, we recommend MetaMask or Trust Wallet to securely store your assets and manage your transactions with ease.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 gsap-fade-in"
+                                     data-scroll-trigger="true"
+                                     data-y="25"
+                                     data-delay="0.25">
+                                    <div class="token-card-3">
+                                        <h5>PURCHASE ETH , TETHER or USDC</h5>
+                                        <p class="mb-0 fs-18 text-heading">
+                                            Buy Ethereum (ETH), Tether (USDT) or USD COIN (USDC) on your favorite exchange, they’ll be used to swap for $LCAPY.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 gsap-fade-in"
+                                     data-scroll-trigger="true"
+                                     data-y="25">
+                                    <div class="token-card-3">
+                                        <h5>ACCESS THE PRESALE SITE</h5>
+                                        <p class="mb-0 fs-18 text-heading">
+                                            Go to the official Layer Capy presale website, connect your wallet, and choose the amount of tokens you want to buy.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 gsap-fade-in"
+                                     data-scroll-trigger="true"
+                                     data-y="25"
+                                     data-delay="0.25">
+                                    <div class="token-card-3">
+                                        <h5>HOLD & ENJOY THE JOURNEY</h5>
+                                        <p class="mb-0 fs-18 text-heading">
+                                            Exchange your ETH/USDT/USDC for $LCAPY, Confirm the transaction, add the token to your wallet, and hold your $LCAPY for the journey ahead.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 d-none d-lg-block">
+                            <img src="{{roo}}assets/img/how-to-buy-img-3.png"
+                                 alt="image"
+                                 class="img-fluid gsap-fade-in"
+                                 style="width: 190%; max-width: none;"
+                                 data-scroll-trigger="true"
+                                 data-y="25" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- How To Buy Section End -->
+            <!-- Road Map  -->
+            <div id="road-map-section"
+                 class="road-map-section-3 section-space-top position-relative z-1">
+                <div class="section-space-md-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="mb-0 text-center text-light text-stroke-md text-shadow-md fs-6vw gsap-text-animation"
+                                    data-scroll-trigger="true"
+                                    data-split-type="words">
+                                    ROAD MAP
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid container-fhd">
+                    <div class="row g-4">
+                        <div class="col-md-6 col-lg-4 col-xl-3 gsap-fade-in"
+                             data-scroll-trigger="true"
+                             data-y="25">
+                            <div class="token-card-3 h-100">
+                                <span class="d-block mb-4 fs-18 text-danger text-stroke text-shadow">
+                                    Q4 - 2025 & Q1 - 2026
+                                </span>
+                                <h5>LET'S START, MATES!</h5>
+                                <ul class="list gap-4">
+                                    <li class="d-flex gap-3">
+                                        <span class="w-6 h-6 d-flex justify-content-center align-items-center rounded-circle border border-dark shadow-sharp-xs bg-light text-dark flex-shrink-0">
+                                            <iconify-icon icon="ri:check-fill"></iconify-icon>
+                                        </span>
+                                        <span class="d-block fs-18 text-dark">
+                                            Presale & Initial Marketing
+                                        </span>
+                                    </li>
+                                    <li class="d-flex gap-3">
+                                        <span class="w-6 h-6 d-flex justify-content-center align-items-center rounded-circle border border-dark shadow-sharp-xs bg-light text-dark flex-shrink-0">
+                                            <iconify-icon icon="ri:check-fill"></iconify-icon>
+                                        </span>
+                                        <span class="d-block fs-18 text-dark">
+                                            Community Building
+                                        </span>
+                                    </li>
+                                    <li class="d-flex gap-3">
+                                        <span class="w-6 h-6 d-flex justify-content-center align-items-center rounded-circle border border-dark shadow-sharp-xs bg-light text-dark flex-shrink-0">
+                                            <iconify-icon icon="ri:check-fill"></iconify-icon>
+                                        </span>
+                                        <span class="d-block fs-18 text-dark">
+                                            Complete the Initial Steps of the Presale
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4 col-xl-3 gsap-fade-in"
+                             data-scroll-trigger="true"
+                             data-y="25"
+                             data-delay="0.25">
+                            <div class="token-card-3 h-100">
+                                <span class="d-block mb-4 fs-18 text-secondary text-stroke text-shadow">
+                                    Q2 - 2026
+                                </span>
+                                <h5>ECOSYSTEM DEVELOPMENT</h5>
+                                <ul class="list gap-4">
+                                    <li class="d-flex gap-3">
+                                        <span class="w-6 h-6 d-flex justify-content-center align-items-center rounded-circle border border-dark shadow-sharp-xs bg-light text-dark flex-shrink-0">
+                                            <iconify-icon icon="ri:check-fill"></iconify-icon>
+                                        </span>
+                                        <span class="d-block fs-18 text-dark">
+                                            Expansion of community channels
+                                        </span>
+                                    </li>
+                                    <li class="d-flex gap-3">
+                                        <span class="w-6 h-6 d-flex justify-content-center align-items-center rounded-circle border border-dark shadow-sharp-xs bg-light text-dark flex-shrink-0">
+                                            <iconify-icon icon="ri:check-fill"></iconify-icon>
+                                        </span>
+                                        <span class="d-block fs-18 text-dark">
+                                            Development of staking and rewards system
+                                        </span>
+                                    </li>
+                                    <li class="d-flex gap-3">
+                                        <span class="w-6 h-6 d-flex justify-content-center align-items-center rounded-circle border border-dark shadow-sharp-xs bg-light text-dark flex-shrink-0">
+                                            <iconify-icon icon="ri:check-fill"></iconify-icon>
+                                        </span>
+                                        <span class="d-block fs-18 text-dark">
+                                            Preparation of Layer Capy utilities
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4 col-xl-3 gsap-fade-in"
+                             data-scroll-trigger="true"
+                             data-y="25"
+                             data-delay="0.5">
+                            <div class="token-card-3 h-100">
+                                <span class="d-block mb-4 fs-18 text-info text-stroke text-shadow">
+                                    Q3 - 2026
+                                </span>
+                                <h5>GROWTH & ADOPTION</h5>
+                                <ul class="list gap-4">
+                                    <li class="d-flex gap-3">
+                                        <span class="w-6 h-6 d-flex justify-content-center align-items-center rounded-circle border border-dark shadow-sharp-xs bg-light text-dark flex-shrink-0">
+                                            <iconify-icon icon="ri:check-fill"></iconify-icon>
+                                        </span>
+                                        <span class="d-block fs-18 text-dark">
+                                            Strategic partnerships in Metaverse and gaming
+                                        </span>
+                                    </li>
+                                    <li class="d-flex gap-3">
+                                        <span class="w-6 h-6 d-flex justify-content-center align-items-center rounded-circle border border-dark shadow-sharp-xs bg-light text-dark flex-shrink-0">
+                                            <iconify-icon icon="ri:check-fill"></iconify-icon>
+                                        </span>
+                                        <span class="d-block fs-18 text-dark">
+                                            Testing of Layer Capy applications
+                                        </span>
+                                    </li>
+                                    <li class="d-flex gap-3">
+                                        <span class="w-6 h-6 d-flex justify-content-center align-items-center rounded-circle border border-dark shadow-sharp-xs bg-light text-dark flex-shrink-0">
+                                            <iconify-icon icon="ri:check-fill"></iconify-icon>
+                                        </span>
+                                        <span class="d-block fs-18 text-dark">
+                                            Exchange negotiations and ecosystem expansion
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4 col-xl-3 gsap-fade-in"
+                             data-scroll-trigger="true"
+                             data-y="25"
+                             data-delay="0.75">
+                            <div class="token-card-3 h-100">
+                                <span class="d-block mb-4 fs-18 text-danger text-stroke text-shadow">
+                                    Q4 - 2026 & Q1 - 2027
+                                </span>
+                                <h5>OFFICIAL TOKEN LAUNCH</h5>
+                                <ul class="list gap-4">
+                                    <li class="d-flex gap-3">
+                                        <span class="w-6 h-6 d-flex justify-content-center align-items-center rounded-circle border border-dark shadow-sharp-xs bg-light text-dark flex-shrink-0">
+                                            <iconify-icon icon="ri:check-fill"></iconify-icon>
+                                        </span>
+                                        <span class="d-block fs-18 text-dark">
+                                            Launch of $LCAPY on Ethereum
+                                        </span>
+                                    </li>
+                                    <li class="d-flex gap-3">
+                                        <span class="w-6 h-6 d-flex justify-content-center align-items-center rounded-circle border border-dark shadow-sharp-xs bg-light text-dark flex-shrink-0">
+                                            <iconify-icon icon="ri:check-fill"></iconify-icon>
+                                        </span>
+                                        <span class="d-block fs-18 text-dark">
+                                            Listings on major exchanges (DEX & CEX)
+                                        </span>
+                                    </li>
+                                    <li class="d-flex gap-3">
+                                        <span class="w-6 h-6 d-flex justify-content-center align-items-center rounded-circle border border-dark shadow-sharp-xs bg-light text-dark flex-shrink-0">
+                                            <iconify-icon icon="ri:check-fill"></iconify-icon>
+                                        </span>
+                                        <span class="d-block fs-18 text-dark">
+                                            Global marketing campaign
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-space-md-top overflow-hidden">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="text-center">
+                                    <img src="{{root}}assets/img/road-map-img-2.png"
+                                         alt="image"
+                                         class="img-fluid gsap-fade-in"
+                                         data-scroll-trigger="true"
+                                         data-x="-35"
+                                         data-start="55%" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Road Map  End -->
+            <!-- Cross Ticker  -->
+            <div class="section-space-sm-y position-relative w-100 text-center overflow-hidden">
+                <div class="ticker-2 py-4 bg-secondary border-top border-bottom border-2x border-dark">
+                    <div class="container-fluid p-0">
+                        <div class="row g-0">
+                            <div class="col-12">
+                                <div class="scroller-x"
+                                     data-speed="slow"
+                                     data-direction="right">
+                                    <ul class="list list-row align-items-center gap-4 scroller-x__list">
+                                        <li>
+                                            <img src="{{root}}assets/img/icon-coin-3.png"
+                                                 alt="image"
+                                                 class="img-fluid" />
+                                        </li>
+                                        <li>
+                                            <h4 class="mb-0 text-dark">
+                                                MORE FASTER AND CHEAPER
+
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <img src="{{root}}assets/img/icon-coin-3.png"
+                                                 alt="image"
+                                                 class="img-fluid" />
+                                        </li>
+                                        <li>
+                                            <h4 class="mb-0 text-primary text-stroke text-shadow">
+                                                LAYER 3 SOLUTION
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <img src="{{root}}assets/img/icon-coin-3.png"
+                                                 alt="image"
+                                                 class="img-fluid" />
+                                        </li>
+                                        <li>
+                                            <h4 class="mb-0 text-dark">
+                                                MORE FASTER AND CHEAPER
+
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <img src="{{root}}assets/img/icon-coin-3.png"
+                                                 alt="image"
+                                                 class="img-fluid" />
+                                        </li>
+                                        <li>
+                                            <h4 class="mb-0 text-primary text-stroke text-shadow">
+                                                LAYER 3 SOLUTION
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <img src="{{root}}assets/img/icon-coin-3.png"
+                                                 alt="image"
+                                                 class="img-fluid" />
+                                        </li>
+                                        <li>
+                                            <h4 class="mb-0 text-dark">
+                                                MORE FASTER AND CHEAPER
+
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <img src="{{root}}assets/img/icon-coin-3.png"
+                                                 alt="image"
+                                                 class="img-fluid" />
+                                        </li>
+                                        <li>
+                                            <h4 class="mb-0 text-primary text-stroke text-shadow">
+                                                LAYER 3 SOLUTION
+                                            </h4>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ticker-3 py-4 bg-danger border-top border-bottom border-2x border-dark z-n2">
+                    <div class="container-fluid p-0">
+                        <div class="row g-0">
+                            <div class="col-12">
+                                <div class="scroller-x"
+                                     data-speed="slow"
+                                     data-direction="left">
+                                    <ul class="list list-row align-items-center gap-4 scroller-x__list">
+                                        <li>
+                                            <img src="{{root}}assets/img/icon-coin-3.png"
+                                                 alt="image"
+                                                 class="img-fluid" />
+                                        </li>
+                                        <li>
+                                            <h4 class="mb-0 text-light">
+                                                JOIN IN THE COMMUNITY!
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <img src="{{root}}assets/img/icon-coin-3.png"
+                                                 alt="image"
+                                                 class="img-fluid" />
+                                        </li>
+                                        <li>
+                                            <h4 class="mb-0 text-light">
+                                                JOIN IN THE COMMUNITY!
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <img src="{{root}}assets/img/icon-coin-3.png"
+                                                 alt="image"
+                                                 class="img-fluid" />
+                                        </li>
+                                        <li>
+                                            <h4 class="mb-0 text-light">
+                                                JOIN IN THE COMMUNITY!
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <img src="{{root}}assets/img/icon-coin-3.png"
+                                                 alt="image"
+                                                 class="img-fluid" />
+                                        </li>
+                                        <li>
+                                            <h4 class="mb-0 text-light">
+                                                JOIN IN THE COMMUNITY!
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <img src="{{root}}assets/img/icon-coin-3.png"
+                                                 alt="image"
+                                                 class="img-fluid" />
+                                        </li>
+                                        <li>
+                                            <h4 class="mb-0 text-light">
+                                                JOIN IN THE COMMUNITY!
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <img src="{{root}}assets/img/icon-coin-3.png"
+                                                 alt="image"
+                                                 class="img-fluid" />
+                                        </li>
+                                        <li>
+                                            <h4 class="mb-0 text-light">
+                                                JOIN IN THE COMMUNITY!
+                                            </h4>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Cross Ticker End -->
+            <!-- Tokenomics -->
+            <div id="tokenomics-section" class="tokenomics-section-1 section-space-y">
+                <div class="section-space-md-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="mb-0 text-center text-light text-stroke-md text-shadow-md fs-6vw gsap-text-animation"
+                                    data-scroll-trigger="true">
+                                    TOKENOMICS
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row g-4">
+                        <div class="col-lg-8 col-xl-6 ms-lg-auto">
+                            <div class="row g-4">
+                                <div class="col-md-6 gsap-fade-in"
+                                     data-scroll-trigger="true"
+                                     data-y="25">
+                                    <div class="token-card-3 h-100 text-center">
+                                        <h2 class="text-secondary text-stroke">2 B</h2>
+                                        <span class="d-block h6 m-0 text-heading">
+                                            TOKEN SUPPLY
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 gsap-fade-in"
+                                     data-scroll-trigger="true"
+                                     data-y="25"
+                                     data-delay="0.25">
+                                    <div class="token-card-3 h-100 text-center">
+                                        <h2 class="text-danger text-stroke">70%</h2>
+                                        <span class="d-block h6 m-0 text-heading">
+                                            PRESALE
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 gsap-fade-in"
+                                     data-scroll-trigger="true"
+                                     data-y="25">
+                                    <div class="token-card-3 h-100 text-center">
+                                        <h2 class="text-primary text-stroke">15%</h2>
+                                        <span class="d-block h6 m-0 text-heading">
+                                            LIQUIDITY
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 gsap-fade-in"
+                                     data-scroll-trigger="true"
+                                     data-y="25"
+                                     data-delay="0.25">
+                                    <div class="token-card-3 h-100 text-center">
+                                        <h2 class="text-success text-stroke">15%</h2>
+                                        <span class="d-block h6 m-0 text-heading"> COMMUNITY & GROWTH </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img src="{{root}}assets/img/tokenomics-img-4.png"
+                     alt="image"
+                     class="img-fluid tokenomics-section-1__img tokenomics-section-1__img--1 gsap-fade-in"
+                     data-scroll-trigger="true"
+                     data-delay="0.5" />
+                <img src="{{root}}assets/img/shape/tokenomics-element-1.png"
+                     alt="image"
+                     class="img-fluid tokenomics-section-1__img tokenomics-section-1__img--2 gsap-fade-in"
+                     data-scroll-trigger="true"
+                     data-delay="0.5" />
+
+
+            </div>
+            <!-- Tokenomics End -->
+            <!-- Ticker -->
+            <div class="ticker-1 py-4 bg-danger border-top border-bottom border-2x border-dark">
+                <div class="container-fluid p-0">
+                    <div class="row g-0">
+                        <div class="col-12">
+                            <div class="scroller-x" data-speed="slow" data-direction="right">
+                                <ul class="list list-row align-items-center gap-4 scroller-x__list">
+                                    <li>
+                                        <img src="{{root}}assets/img/icon-coin-3.png"
+                                             alt="image"
+                                             class="img-fluid" />
+                                    </li>
+                                    <li>
+                                        <h4 class="mb-0 text-light text-stroke text-shadow">
+                                            JOIN IN THE COMMUNITY!
+                                        </h4>
+                                    </li>
+                                    <li>
+                                        <img src="{{root}}assets/img/icon-coin-3.png"
+                                             alt="image"
+                                             class="img-fluid" />
+                                    </li>
+                                    <li>
+                                        <h4 class="mb-0 text-light text-stroke text-shadow">
+                                            JOIN IN THE COMMUNITY!
+                                        </h4>
+                                    </li>
+                                    <li>
+                                        <img src="{{root}}assets/img/icon-coin-3.png"
+                                             alt="image"
+                                             class="img-fluid" />
+                                    </li>
+                                    <li>
+                                        <h4 class="mb-0 text-light text-stroke text-shadow">
+                                            JOIN IN THE COMMUNITY!
+                                        </h4>
+                                    </li>
+                                    <li>
+                                        <img src="{{root}}assets/img/icon-coin-3.png"
+                                             alt="image"
+                                             class="img-fluid" />
+                                    </li>
+                                    <li>
+                                        <h4 class="mb-0 text-light text-stroke text-shadow">
+                                            JOIN IN THE COMMUNITY!
+                                        </h4>
+                                    </li>
+                                    <li>
+                                        <img src="{{root}}assets/img/icon-coin-3.png"
+                                             alt="image"
+                                             class="img-fluid" />
+                                    </li>
+                                    <li>
+                                        <h4 class="mb-0 text-light text-stroke text-shadow">
+                                            JOIN IN THE COMMUNITY!
+                                        </h4>
+                                    </li>
+                                    <li>
+                                        <img src="{{root}}assets/img/icon-coin-3.png"
+                                             alt="image"
+                                             class="img-fluid" />
+                                    </li>
+                                    <li>
+                                        <h4 class="mb-0 text-light text-stroke text-shadow">
+                                            JOIN IN THE COMMUNITY!
+                                        </h4>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Ticker End -->
+            <!-- FAQ -->
+            <div id="faq-section" class="faq-section-2 section-space-y">
+                <div class="section-space-md-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="mb-0 text-center text-light text-stroke-md text-shadow-md fs-6vw gsap-text-animation"
+                                    data-scroll-trigger="true">
+                                    FAQ
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-space-bottom">
+                    <div class="container">
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="accordion accordion-connected accordion-separate"
+                                     id="faqOne">
+                                    <div class="accordion-item shadow-sharp-md">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#faqOneA"
+                                                    aria-expanded="true"
+                                                    aria-controls="faqOneA">
+                                                <span class="accordion-button__title">
+                                                    What is Layer Capy ($LCAPY)?
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div id="faqOneA"
+                                             class="accordion-collapse collapse"
+                                             data-bs-parent="#faqOne">
+                                            <div class="accordion-body">
+                                                Layer Capy is a next-generation crypto project built on Ethereum, designed to combine scalability, community, and innovation.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item shadow-sharp-md">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#faqOneB"
+                                                    aria-expanded="false"
+                                                    aria-controls="faqOneB">
+                                                <span class="accordion-button__title">
+                                                    When will the token be officially launched?
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div id="faqOneB"
+                                             class="accordion-collapse collapse"
+                                             data-bs-parent="#faqOne">
+                                            <div class="accordion-body">
+                                                The official launch of $LCAPY is scheduled for Q4 2026 or Q1 2027 (Or when Presale's end), after the presale and ecosystem development phases.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item shadow-sharp-md">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#faqOneC"
+                                                    aria-expanded="false"
+                                                    aria-controls="faqOneC">
+                                                <span class="accordion-button__title">
+                                                    How can I buy $LCAPY during the presale?
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div id="faqOneC"
+                                             class="accordion-collapse collapse"
+                                             data-bs-parent="#faqOne">
+                                            <div class="accordion-body">
+                                                You can access the official presale site, connect your wallet (MetaMask or Trust Wallet), and purchase using ETH, USDT OR USDC.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item shadow-sharp-md">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#faqOneD"
+                                                    aria-expanded="false"
+                                                    aria-controls="faqOneD">
+                                                <span class="accordion-button__title">
+                                                    What is the total supply of $LCAPY?
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div id="faqOneD"
+                                             class="accordion-collapse collapse"
+                                             data-bs-parent="#faqOne">
+                                            <div class="accordion-body">
+                                                The total supply is 2 billion tokens, with 70% allocated to presale, 15% to liquidity, and 15% to community incentives.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="accordion accordion-connected accordion-separate"
+                                     id="faqTwo">
+                                    <div class="accordion-item shadow-sharp-md">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#faqTwoA"
+                                                    aria-expanded="true"
+                                                    aria-controls="faqTwoA">
+                                                <span class="accordion-button__title">
+                                                    Which wallets are supported?
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div id="faqTwoA"
+                                             class="accordion-collapse collapse"
+                                             data-bs-parent="#faqTwo">
+                                            <div class="accordion-body">
+                                                We recommend MetaMask and Trust Wallet, but any ERC‑20 compatible wallet can store $LCAPY.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item shadow-sharp-md">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#faqTwoB"
+                                                    aria-expanded="false"
+                                                    aria-controls="faqTwoB">
+                                                <span class="accordion-button__title">
+                                                    Will $LCAPY be listed on exchanges?
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div id="faqTwoB"
+                                             class="accordion-collapse collapse"
+                                             data-bs-parent="#faqTwo">
+                                            <div class="accordion-body">
+                                                Yes. After the official launch in Q4 2026 or Q1 2027, $LCAPY will be listed on major DEX and later on CEX platforms.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item shadow-sharp-md">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#faqTwoC"
+                                                    aria-expanded="false"
+                                                    aria-controls="faqTwoC">
+                                                <span class="accordion-button__title">
+                                                    Is there an airdrop or rewards program?
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div id="faqTwoC"
+                                             class="accordion-collapse collapse"
+                                             data-bs-parent="#faqTwo">
+                                            <div class="accordion-body">
+                                                Yes. 5% of the supply is reserved for airdrops and community rewards to incentivize early supporters.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item shadow-sharp-md">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#faqTwoD"
+                                                    aria-expanded="false"
+                                                    aria-controls="faqTwoD">
+                                                <span class="accordion-button__title">
+                                                    What makes Layer Capy unique?
+                                                </span>
+                                            </button>
+                                        </h2>
+                                        <div id="faqTwoD"
+                                             class="accordion-collapse collapse"
+                                             data-bs-parent="#faqTwo">
+                                            <div class="accordion-body">
+                                                Layer Capy positions itself as a Layer 3 innovation, focusing on community-driven growth, low fees, and creative use cases in Metaverse and gaming.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FAQ End -->
+            <!-- CTA Section  -->
+            <div class="position-relative z-1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="cta-2 section-space-y bg-secondary rounded-5 px-6 px-md-12 px-lg-18 position-relative z-1 overflow-hidden gsap-fade-in"
+                                 data-scroll-trigger="true">
+                                <div class="row">
+                                    <div class="col-md-7 col-lg-6">
+                                        <h2 class="h1 mb-8 text-light text-stroke text-shadow gsap-text-animation"
+                                            data-scroll-trigger="true"
+                                            data-split-type="words">
+                                            JOIN OUR COMMUNITY
+                                        </h2>
+                                        <ul class="list list-row align-items-center flex-wrap gap-4">
+
+                                            <li class="gsap-fade-in"
+                                                data-scroll-trigger="true"
+                                                data-y="25"
+                                                data-delay="0.25">
+                                                <a href="https://x.com/LayerCapy"
+                                                   class="btn btn-icon btn-light rounded-circle">
+                                                    <iconify-icon icon="prime:twitter"></iconify-icon>
+                                                </a>
+                                            </li>
+                                            <li class="gsap-fade-in"
+                                                data-scroll-trigger="true"
+                                                data-y="25"
+                                                data-delay="0.5">
+                                                <a href="https://www.instagram.com/layercapy/"
+                                                   class="btn btn-icon btn-light rounded-circle">
+                                                    <iconify-icon icon="uil:instagram"></iconify-icon>
+                                                </a>
+                                            </li>
+                                            <li class="gsap-fade-in"
+                                                data-scroll-trigger="true"
+                                                data-y="25"
+                                                data-delay="0.75">
+                                                <a href="https://t.me/LayerCapyNews"
+                                                   class="btn btn-icon btn-light rounded-circle">
+                                                    <iconify-icon icon="mdi:telegram"></iconify-icon>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <img src="{{root}}assets/img/cta-img-1.png"
+                                     alt="image"
+                                     class="img-fluid d-none d-md-block position-absolute end-0 bottom-0 z-n1 pointer-none gsap-fade-in cta-img-custom"
+                                     data-scroll-trigger="true"
+                                     data-y="25" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-space-md-top section-space-xsm-bottom">
+                    <div class="container">
+                        <div class="row g-4">
+                            <div class="col-xl-8">
+                                <div class="row g-4">
+                                    <div class="col-md-5 gsap-fade-in"
+                                         data-scroll-trigger="true">
+                                        <a class="logo d-inline-block mb-4" href="index.html">
+                                            <img src="{{root}}assets/img/logo-red.png"
+                                                 alt="image"
+                                                 class="logo__img logo__img--light" />
+                                        </a>
+                                        <p class="mb-6 text-light">
+                                            $LCAPY is a utility token designed for use within the Layer Capy ecosystem. It does not represent equity, ownership, or a guarantee of profits. Participation involves risk, and users should not expect financial returns solely from holding the token. Always do your own research before purchasing or using $LCAPY.
+                                        </p>
+                                        <ul class="list list-row align-items-center flex-wrap gap-4">
+
+                                            <li>
+                                                <a href="https://x.com/LayerCapy"
+                                                   class="btn btn-icon btn-light rounded-circle">
+                                                    <iconify-icon icon="prime:twitter"></iconify-icon>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.instagram.com/layercapy/"
+                                                   class="btn btn-icon btn-light rounded-circle">
+                                                    <iconify-icon icon="uil:instagram"></iconify-icon>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://t.me/LayerCapyNews"
+                                                   class="btn btn-icon btn-light rounded-circle">
+                                                    <iconify-icon icon="mdi:telegram"></iconify-icon>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4 gsap-fade-in"
+                                         data-scroll-trigger="true"
+                                         data-delay="0.25">
+                                        <h5 class="text-light">QUICK LINKS</h5>
+                                        <ul class="list gap-2">
+                                            <li>
+                                                <a href="index.html"
+                                                   class="link d-inline-block text-light hover:text-danger">
+                                                    Home
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#about-section"
+                                                   class="link d-inline-block text-light hover:text-danger">
+                                                    About
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#how-to-buy-section"
+                                                   class="link d-inline-block text-light hover:text-danger">
+                                                    How to Buy
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#road-map-section"
+                                                   class="link d-inline-block text-light hover:text-danger">
+                                                    Roadmap
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-3 gsap-fade-in"
+                                         data-scroll-trigger="true"
+                                         data-delay="0.5">
+                                        <h5 class="text-light">CONTACT</h5>
+                                        <ul class="list gap-2">
+                                            <li>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <iconify-icon icon="simple-icons:x"
+                                                                  class="text-light flex-shrink-0 fs-24"></iconify-icon>
+                                                    <p class="mb-0 text-light">
+                                                        x.com/LayerCapy
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <iconify-icon icon="mdi:telegram"
+                                                                  class="text-light flex-shrink-0 fs-24"></iconify-icon>
+                                                    <p class="mb-0 text-light">
+                                                        t.me/LayerCapyNews
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <iconify-icon icon="basil:envelope-outline"
+                                                                  class="text-light flex-shrink-0 fs-24"></iconify-icon>
+                                                    <p class="mb-0 text-light">
+                                                        support@layercapy.com
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 gsap-fade-in"
+                                 data-scroll-trigger="true"
+                                 data-delay="0.75">
+                                <div class="p-8 rounded-4 bg-secondary" style="border: 5px solid white;">
+                                    <h5 class="text-heading">DON'T MISS LAYERCAPY NEWS! JOIN OUR COMMUNITY ON X & TELEGRAM, AND FOLLOW US ON INSTAGRAM!</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-6 border-top border-2x border-light" />
+                    <div class="row g-4 justify-content-center align-items-center">
+                        <div class="col-lg-5">
+                            <p class="mb-0 fs-18 text-light text-center text-lg-start gsap-fade-in"
+                               data-scroll-trigger="true">
+                                &copy; LayerCapy 2025. All rights reserved
+                            </p>
+                        </div>
+                        <div class="col-lg-7">
+                            <ul class="list list-row gap-4 flex-wrap justify-content-center justify-content-lg-end">
+                                <li class="gsap-fade-in" data-scroll-trigger="true">
+                                    <a href="{{root}}privacy-policy.html"
+                                       class="link fs-18 text-light hover:text-primary">
+                                        Privacy Policy
+                                    </a>
+                                </li>
+                                <li class="gsap-fade-in"
+                                    data-scroll-trigger="true"
+                                    data-delay="0.25">
+                                    <a href="{{root}}terms.html"
+                                       class="link fs-18 text-light hover:text-primary">
+                                        Terms of Use
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img src="{{root}}assets/img/shape/hero-bg-4.png"
+             alt="image"
+             class="img-fluid w-100 position-absolute start-0 bottom-0 z-n1 pointer-none"
+
+    </div>
+</div>
+</div>
+
+<script src="//cdn.jsdelivr.net/npm/eruda"></script>
+<script>eruda.init();</script>
+
+<script type="module">
+    // ==============================================================================
+    // 1. CONFIGURAÇÃO DO FIREBASE E ESTILOS
+    // ==============================================================================
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, doc, setDoc, updateDoc, increment, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    //⚠️ SUAS CHAVES DO FIREBASE ⚠️
+    const firebaseConfig = {
+        apiKey: "AIzaSyBsG7CPMEl4dVWQPWieI-cEgu0VEPAR4Fs",
+        authDomain: "layercapy-presale.firebaseapp.com",
+        projectId: "layercapy-presale",
+        storageBucket: "layercapy-presale.firebasestorage.app",
+        messagingSenderId: "173490079404",
+        appId: "1:173490079404:web:7dcdf302e42ab1c1cbc109",
+        measurementId: "G-PF8Q18MMRY"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Metas das Fases
+    const PHASE_TARGETS = [
+        106194.16, 273079.04, 510080.52, 827778.05, 1238031.74,
+        1778736.37, 2415521.91, 3182611.14, 4133253.75, 5267082.14,
+        6599811.07, 8131078.13, 9916177.73, 11994455.91, 14386131.87,
+        17138013.06, 20290787.69, 23898576.33, 28012108.23, 32690809.85, 38000515.89
+    ];
+
+    let countdownInterval;
+
+    // --- SALVAR NO BANCO E RESETAR TIMER SE MUDAR DE FASE ---
+    async function saveTransactionToDB(txHash, wallet, amountUSD, amountTokens, currentWeb3Phase) {
+        try {
+            // 1. Salva a transação individual
+            const txRef = doc(db, "transactions", txHash);
+            await setDoc(txRef, {
+                wallet: wallet,
+                amountUSD: parseFloat(amountUSD) || 0,
+                amountTokens: parseFloat(amountTokens) || 0,
+                phase: Number(currentWeb3Phase || 0),
+                timestamp: new Date(),
+                hash: txHash,
+                confirmed: true
+            });
+
+            // 2. Atualiza Estatísticas e Verifica Fase
+            const statsRef = doc(db, "presale_stats", "global");
+            const docSnap = await getDoc(statsRef);
+
+            let shouldResetTimer = false;
+            let currentDbPhase = 0;
+
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                currentDbPhase = data.currentPhaseIndex || 0;
+            }
+
+            // SE A FASE DA COMPRA FOR MAIOR QUE A FASE NO BANCO -> RESETA O TIMER
+            if (Number(currentWeb3Phase) > currentDbPhase) {
+                shouldResetTimer = true;
+            }
+
+            const updateData = {
+                totalRaisedUSD: increment(parseFloat(amountUSD) || 0),
+                totalTokensSold: increment(parseFloat(amountTokens) || 0),
+                currentPhaseIndex: Number(currentWeb3Phase)
+            };
+
+            if (shouldResetTimer) {
+                const thirtyDaysFromNow = new Date();
+                thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
+                updateData.phaseEndsAt = thirtyDaysFromNow.getTime();
+            }
+
+            await updateDoc(statsRef, updateData).catch(async (err) => {
+                if (err.code === 'not-found') {
+                    const thirtyDaysFromNow = new Date();
+                    thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
+                    await setDoc(statsRef, {
+                        totalRaisedUSD: parseFloat(amountUSD) || 0,
+                        totalTokensSold: parseFloat(amountTokens) || 0,
+                        currentPhaseIndex: Number(currentWeb3Phase),
+                        phaseEndsAt: thirtyDaysFromNow.getTime()
+                    });
+                }
+            });
+        } catch (e) {
+            console.error("Database sync error (Transaction is safe on-chain):", e);
+        }
+    }
+
+    // --- FUNÇÃO DO CRONÔMETRO ---
+    function updateTimerUI(endTime) {
+        if (countdownInterval) clearInterval(countdownInterval);
+
+        function tick() {
+            const now = new Date().getTime();
+            const distance = endTime - now;
+
+            if (distance < 0) {
+                document.getElementById("cd_days").innerText = "0";
+                document.getElementById("cd_hours").innerText = "00";
+                document.getElementById("cd_minutes").innerText = "00";
+                document.getElementById("cd_seconds").innerText = "00";
+                clearInterval(countdownInterval);
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const elDays = document.getElementById("cd_days");
+            if (elDays) {
+                elDays.innerText = days;
+                document.getElementById("cd_hours").innerText = hours < 10 ? "0" + hours : hours;
+                document.getElementById("cd_minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("cd_seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+            }
+        }
+        tick();
+        countdownInterval = setInterval(tick, 1000);
+    }
+
+    // --- ATUALIZAÇÃO EM TEMPO REAL ---
+    function initLiveStats() {
+        const elRaised = document.getElementById('totalRaisedDisplay');
+        const elTarget = document.getElementById('phaseTargetDisplay');
+        const elBar = document.getElementById('progressBar');
+        const elPerc = document.getElementById('progressPercentage');
+        const elPhase = document.getElementById('currentPhaseDisplay'); // Atualiza texto da fase
+
+        onSnapshot(doc(db, "presale_stats", "global"), (docSnapshot) => {
+            if (docSnapshot.exists()) {
+                const data = docSnapshot.data();
+
+                // 1. Atualiza Valores
+                const raised = data.totalRaisedUSD || 0;
+                if (elRaised) elRaised.innerText = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(raised);
+
+                // 2. Atualiza Fase e Meta
+                const currentPhase = data.currentPhaseIndex || 0;
+                if (elPhase) elPhase.innerText = currentPhase; // Mostra número da fase
+
+                const target = PHASE_TARGETS[currentPhase] || PHASE_TARGETS[PHASE_TARGETS.length - 1];
+                if (elTarget) elTarget.innerText = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(target);
+
+                // 3. Atualiza Barra
+                if (elBar) {
+                    const pct = Math.min((raised / target) * 100, 100);
+                    elBar.style.width = `${pct}%`;
+                    if (elPerc) elPerc.innerText = `${pct.toFixed(1)}%`;
+                }
+
+                // 4. ATUALIZA O CRONÔMETRO
+                let endTime = data.phaseEndsAt;
+                if (!endTime) {
+                    const tempDate = new Date();
+                    tempDate.setDate(tempDate.getDate() + 30);
+                    endTime = tempDate.getTime();
+                }
+                updateTimerUI(endTime);
+            }
+        });
+    }
+
+    // ==============================================================================
+    // 2. ESTILOS E WEB3 (CORRIGIDO E BLINDADO)
+    // ==============================================================================
+    const modalStyles = `
+        .js-connect-wallet, #btn-buy-token { height: 70px !important; min-height: 70px !important; font-size: 28px !important; font-weight: 700 !important; border-radius: 12px !important; padding: 0 24px !important; box-sizing: border-box !important; display: flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; line-height: 1.2 !important; }
+        .custom-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 10000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .custom-modal-box { background: #121212; border: 2px solid #333; border-radius: 16px; padding: 30px; width: 90%; max-width: 450px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-family: sans-serif; color: #fff; transform: scale(0.9); transition: transform 0.2s ease; }
+        .custom-modal-box.active { transform: scale(1); }
+        .modal-icon { font-size: 40px; margin-bottom: 15px; display: block; }
+        .modal-title { font-size: 22px; font-weight: bold; margin-bottom: 10px; color: #fff; }
+        .modal-msg { font-size: 15px; color: #ccc; margin-bottom: 25px; line-height: 1.5; word-break: break-all; }
+        .modal-msg a { color: #00ff88; text-decoration: underline; font-weight: bold; }
+        .modal-btn { background: #fff; color: #000; border: none; padding: 12px 30px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: background 0.2s; margin: 5px; }
+        .modal-btn:hover { background: #ddd; }
+        .btn-add-token { background: rgba(226, 118, 37, 0.15); color: #e2761b; border: 1px solid #e2761b; display: flex; align-items: center; justify-content: center; gap: 8px; margin: 10px auto; width: fit-content; }
+        .btn-add-token:hover { background: rgba(226, 118, 37, 0.3); }
+        .modal-success { border-color: #00ff88; } .modal-success .modal-icon { color: #00ff88; }
+        .modal-error { border-color: #ff4d4d; } .modal-error .modal-icon { color: #ff4d4d; }
+        .modal-loading { border-color: #ffd700; } .modal-loading .modal-icon { color: #ffd700; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    `;
+    const styleSheet = document.createElement("style"); styleSheet.innerText = modalStyles; document.head.appendChild(styleSheet);
+
+    const modalHTML = `
+        <div id="statusModal" class="custom-modal-overlay">
+            <div class="custom-modal-box" id="modalBox">
+                <span id="modalIcon" class="modal-icon">★</span>
+                <div id="modalTitle" class="modal-title">Notice</div>
+                <div id="modalMessage" class="modal-msg">Message here...</div>
+                <div id="modalButtons"><button class="modal-btn" id="modalBtn" onclick="document.getElementById('statusModal').style.display='none'">Close</button></div>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    window.showModal = (title, message, type = 'info') => {
+        const modal = document.getElementById('statusModal'); const box = document.getElementById('modalBox'); const icon = document.getElementById('modalIcon'); const btn = document.getElementById('modalBtn');
+        document.getElementById('modalTitle').innerText = title; document.getElementById('modalMessage').innerHTML = message;
+        box.className = 'custom-modal-box active';
+        if (type === 'success') { box.classList.add('modal-success'); icon.innerHTML = '✔'; btn.style.display = 'inline-block'; }
+        else if (type === 'error') { box.classList.add('modal-error'); icon.innerHTML = '✖'; btn.style.display = 'inline-block'; }
+        else if (type === 'loading') { box.classList.add('modal-loading'); icon.innerHTML = '⟳'; btn.style.display = 'none'; }
+        else { icon.innerHTML = 'ℹ'; btn.style.display = 'inline-block'; }
+        modal.style.display = 'flex';
+    };
+    // --- IMPORTS (VERSÃO 1.6.5 ESTÁVEL - SEM BUNDLE PARA EVITAR ERRO DE SVG) ---
+    import { createAppKit } from 'https://esm.sh/@reown/appkit@1.6.5'
+    import { EthersAdapter } from 'https://esm.sh/@reown/appkit-adapter-ethers@1.6.5'
+    import { mainnet, arbitrum, polygon, bsc } from 'https://esm.sh/@reown/appkit@1.6.5/networks'
+    import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.min.js'
+
+    // Fix para links externos
+    window.open = (function (open) {
+        return function (url, _, features) {
+            return open.call(window, url, "_blank", features);
+        };
+    })(window.open);
+
+    // --- CONFIGURAÇÃO ---
+    const projectId = '4448a0bd7ce70f8d19a6fc5097ed2b5c'
+    const TARGET_CHAIN_ID = 1;
+    const TARGET_CHAIN_HEX = '0x1';
+
+    const networks = [mainnet, polygon, arbitrum, bsc];
+
+    // 1. Adapter com detecção forçada de Injected (Mobile)
+    const ethersAdapter = new EthersAdapter();
+
+    const metadata = {
+        name: 'LayerCapy',
+        description: 'Ethereum’s Next Layer of Innovation',
+        url: 'https://layercapy.io',
+        icons: ['https://layercapy.io/assets/img/logo.png'],
+        redirect: {
+            native: 'layercapy://', // Schema customizado
+            universal: 'https://layercapy.io' // Universal Link
+        }
+    }
+
+    let modal;
+    try {
+        modal = createAppKit({
+            adapters: [ethersAdapter],
+            networks,
+            projectId,
+            metadata,
+            themeMode: 'dark',
+            features: { analytics: true },
+            enableInjected: true // IMPORTANTE PARA MOBILE
+        });
+    } catch (e) { console.error("AppKit Init Error:", e); }
+
+    // Provedor de Leitura (RPC Público - Não depende da carteira)
+    const readProvider = new ethers.JsonRpcProvider('https://eth-mainnet.g.alchemy.com/v2/ma0nuvI6PKNechCy6dztW');
+
+    const TOKEN_CONTRACT_ADDRESS = '0x1d251256dCDf97F118A46549Bd96813a6F7b38CF';
+
+    // --- ABIS CORRIGIDAS (LIMPAS) ---
+    const TOKEN_ABI = [
+        "function currentPhase() view returns (uint256)",
+        "function capyTokenDecimals() view returns (uint8)",
+        "function PRICE_DECIMALS() view returns (uint8)",
+        "function phases(uint256) view returns (uint256 priceUSD, uint256 tokens)",
+        "function buyWithETH() payable",
+        "function buyWithToken(address token, uint256 amount)"
+    ];
+
+    // ABI Genérica para Tokens (Funciona para USDC e USDT)
+    const TOKEN_GENERIC_ABI = [
+        "function approve(address spender, uint256 amount)",
+        "function allowance(address owner, address spender) view returns (uint256)",
+        "function decimals() view returns (uint8)"
+    ];
+
+    const ORACLE_ABI = [
+        "function latestRoundData() view returns (uint80, int256, uint256, uint256, uint80)"
+    ];
+
+    const CHAIN_CONFIGS = {
+        1: {
+            ETH_USD_ORACLE: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
+            TOKENS: {
+                USDC: { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', decimals: 6, abi: TOKEN_GENERIC_ABI },
+                USDT: { address: '0xdAC17F958D2ee523a2206206994597C13D831ec7', decimals: 6, abi: TOKEN_GENERIC_ABI }
+            }
+        }
+    };
+
+    let LCAPY_PRICE_USD_SCALED = 0n;
+    let LCAPY_DECIMALS = 18;
+    let currentCurrency = 'ETH';
+    window.currentPhaseIndex = 0;
+
+    // --- LEITURAS (RPC PÚBLICO) ---
+    async function fetchEthPrice() {
+        try {
+            const contract = new ethers.Contract(CHAIN_CONFIGS[1].ETH_USD_ORACLE, ORACLE_ABI, readProvider);
+            const data = await contract.latestRoundData();
+            return data[1];
+        } catch (e) { return null; }
+    }
+
+    const updateConversion = async () => {
+        const payInAmountInput = document.getElementById('payInAmount');
+        const receivedAmountInput = document.getElementById('receivedAmount');
+        const currentPhaseDisplay = document.getElementById('currentPhaseDisplay');
+        const capyPriceDisplay = document.getElementById('capyPriceDisplay');
+        let payInValue = parseFloat(payInAmountInput?.value) || 0;
+
+        try {
+            const contract = new ethers.Contract(TOKEN_CONTRACT_ADDRESS, TOKEN_ABI, readProvider);
+
+            const [phaseIndex, decimals, priceDecimals] = await Promise.all([
+                contract.currentPhase(),
+                contract.capyTokenDecimals(),
+                contract.PRICE_DECIMALS()
+            ]);
+
+            const phaseData = await contract.phases(phaseIndex);
+            window.currentPhaseIndex = Number(phaseIndex);
+
+            if (currentPhaseDisplay) currentPhaseDisplay.textContent = phaseIndex.toString();
+
+            const rawPrice = phaseData.priceUSD;
+            const formattedPrice = ethers.formatUnits(rawPrice, priceDecimals);
+
+            if (capyPriceDisplay) capyPriceDisplay.textContent = `$${parseFloat(formattedPrice).toFixed(4)}`;
+
+            let priceScaled = rawPrice;
+            const target = 18;
+            const pDecimals = Number(priceDecimals);
+
+            if (pDecimals < target) priceScaled = rawPrice * (10n ** BigInt(target - pDecimals));
+            else if (pDecimals > target) priceScaled = rawPrice / (10n ** BigInt(pDecimals - target));
+
+            LCAPY_PRICE_USD_SCALED = priceScaled;
+            LCAPY_DECIMALS = Number(decimals);
+
+        } catch (e) {
+            if (currentPhaseDisplay) currentPhaseDisplay.textContent = "-";
+        }
+
+        if (payInValue === 0) { if (receivedAmountInput) receivedAmountInput.value = '0.00'; return; }
+        if (receivedAmountInput) receivedAmountInput.value = '...';
+
+        try {
+            let valueInUsdScaled = 0n;
+
+            if (currentCurrency === 'ETH') {
+                const ethPrice = await fetchEthPrice();
+                if (!ethPrice) return;
+                const inputWei = ethers.parseUnits(payInValue.toString(), 18);
+                valueInUsdScaled = (inputWei * ethPrice) / 100000000n;
+            } else {
+                valueInUsdScaled = ethers.parseUnits(payInValue.toString(), 18);
+            }
+
+            let tokensAmount = (valueInUsdScaled * (10n ** BigInt(LCAPY_DECIMALS))) / LCAPY_PRICE_USD_SCALED;
+            tokensAmount = (tokensAmount * 995n) / 1000n;
+
+            const floatValue = parseFloat(ethers.formatUnits(tokensAmount, LCAPY_DECIMALS));
+            if (!isNaN(floatValue) && receivedAmountInput) {
+                receivedAmountInput.value = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(floatValue);
+            }
+        } catch (e) { console.error("Calc error:", e); }
+    };
+
+    // --- LÓGICA DE COMPRA ---
+    async function handleBuyTokens() {
+
+        let walletProvider;
+
+        // ESTRATÉGIA PRIORITÁRIA: Tentar detectar Injected Provider (MetaMask no browser mobile)
+        if (window.ethereum) {
+            walletProvider = new ethers.BrowserProvider(window.ethereum);
+        } else {
+            // Fallback: Tenta pegar do Modal (WalletConnect)
+            const providerFromModal = modal.getProvider();
+            if (providerFromModal) {
+                walletProvider = new ethers.BrowserProvider(providerFromModal);
+            } else {
+                return modal.open();
+            }
+        }
+
+        let signer;
+        try {
+            signer = await walletProvider.getSigner();
+        } catch (e) {
+            return modal.open(); // Força abrir modal se não conseguir signer
+        }
+
+        const userAddress = await signer.getAddress();
+
+        // --- VERIFICAÇÃO DE REDE ---
+        const network = await walletProvider.getNetwork();
+
+        // Se a chain ID for diferente da Mainnet
+        if (network.chainId !== BigInt(TARGET_CHAIN_ID)) {
+            try {
+                // Tenta trocar nativamente
+                await walletProvider.send("wallet_switchEthereumChain", [{ chainId: TARGET_CHAIN_HEX }]);
+                // Recarrega o signer (Crucial após troca de rede)
+                signer = await walletProvider.getSigner();
+            } catch (error) {
+                // Erro 4902: Rede não existe
+                if (error.code === 4902) {
+                    alert("Adicione Ethereum Mainnet na sua carteira.");
+                } else {
+                    // Outros erros: Apenas avisa
+                    window.showModal("Rede Incorreta", "Por favor, troque para Ethereum Mainnet.", "error");
+                }
+                return;
+            }
+        }
+
+        const payInAmountInput = document.getElementById('payInAmount');
+        const val = payInAmountInput.value;
+        if (!val || parseFloat(val) <= 0) { window.showModal("Erro", "Valor inválido.", "error"); return; }
+
+        try {
+            window.showModal("Aguardando", "Confirme na sua carteira...", "loading");
+
+            let tx;
+            let paidAmountUSD = 0;
+
+            const contractWithSigner = new ethers.Contract(TOKEN_CONTRACT_ADDRESS, TOKEN_ABI, signer);
+
+            if (currentCurrency === 'ETH') {
+                const ethPrice = await fetchEthPrice();
+                const valWei = ethers.parseUnits(val, 18);
+                paidAmountUSD = ethPrice ? parseFloat(ethers.formatUnits((valWei * ethPrice) / 100000000n, 18)) : 0;
+
+                tx = await contractWithSigner.buyWithETH({ value: valWei });
+
+            } else {
+                paidAmountUSD = parseFloat(val);
+                const tokenConf = CHAIN_CONFIGS[TARGET_CHAIN_ID].TOKENS[currentCurrency];
+                const valToken = ethers.parseUnits(val, tokenConf.decimals);
+                const tokenContract = new ethers.Contract(tokenConf.address, tokenConf.abi, signer);
+
+                const allowance = await tokenContract.allowance(userAddress, TOKEN_CONTRACT_ADDRESS);
+
+                if (allowance < valToken) {
+                    window.showModal("Aprovação", `Aprovando ${currentCurrency}...`, "loading");
+
+                    // Reset USDT se necessário
+                    if (currentCurrency === 'USDT' && allowance > 0n) {
+                        const resetTx = await tokenContract.approve(TOKEN_CONTRACT_ADDRESS, 0);
+                        await resetTx.wait();
+                    }
+
+                    const approveTx = await tokenContract.approve(TOKEN_CONTRACT_ADDRESS, valToken);
+                    await approveTx.wait();
+                    window.showModal("Aprovado", "Confirme a compra...", "loading");
+                }
+
+                tx = await contractWithSigner.buyWithToken(tokenConf.address, valToken);
+            }
+
+            window.showModal("Confirmando", `Transação enviada...`, "loading");
+            const receipt = await tx.wait(); // Espera confirmação
+
+            if (receipt.status === 1) {
+                try {
+                    const tokensEstimated = document.getElementById('receivedAmount').value.replace(/,/g, '');
+                    await saveTransactionToDB(tx.hash, userAddress, paidAmountUSD, tokensEstimated, window.currentPhaseIndex);
+                } catch (e) { }
+                await updateConversion();
+                window.showModal("Sucesso!", `Tokens Comprados!`, "success");
+            } else {
+                throw new Error("Falha na execução on-chain");
+            }
+
+        } catch (e) {
+            console.error(e);
+            let msg = e.message || e.toString();
+
+            // Tratamento de erros comuns
+            if (msg.includes("rejected")) window.showModal("Cancelado", "Rejeitado pelo usuário.", "error");
+            else if (msg.includes("insufficient funds")) window.showModal("Saldo Insuficiente", "Você não tem saldo para essa transação.", "error");
+            else window.showModal("Erro", "Falha na transação. Tente novamente.", "error");
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const payInAmountInput = document.getElementById('payInAmount');
+        const currencyItems = document.querySelectorAll('.dropdown-item');
+        const btnBuy = document.getElementById('btn-buy-token');
+
+        currencyItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentCurrency = item.getAttribute('data-currency');
+                const t = document.getElementById('currentPayInText'); const i = document.getElementById('currentPayInIcon');
+                if (t) t.textContent = currentCurrency;
+                if (i) {
+                    const map = { 'ETH': 'cryptocurrency-color:eth', 'USDT': 'cryptocurrency-color:usdt', 'USDC': 'cryptocurrency-color:usdc' };
+                    i.setAttribute('icon', map[currentCurrency] || 'cryptocurrency-color:eth');
+                }
+                updateConversion();
+            })
+        });
+
+        if (payInAmountInput) payInAmountInput.addEventListener('input', updateConversion);
+        if (btnBuy) btnBuy.addEventListener('click', handleBuyTokens);
+
+        // --- ATUALIZAÇÃO DE UI CORRIGIDA ---
+        const updateUI = () => {
+            const address = modal.getAddress();
+            const isConnected = !!address;
+
+            const btns = document.querySelectorAll('.js-connect-wallet');
+            btns.forEach(b => {
+                const span = b.querySelector('span');
+                if (span) {
+                    if (isConnected) {
+                        span.innerText = address.substring(0, 6) + '...' + address.substring(address.length - 4);
+                    } else {
+                        span.innerText = 'Connect Wallet';
+                    }
+                }
+                b.onclick = (e) => { e.preventDefault(); modal.open(); }
+            });
+
+            if (btnBuy) {
+                if (isConnected) {
+                    btnBuy.style.setProperty('display', 'flex', 'important');
+                    btnBuy.innerText = "Buy $LCAPY";
+                } else {
+                    btnBuy.style.setProperty('display', 'none', 'important');
+                }
+            }
+        };
+
+        // Ouvinte de Estado
+        modal.subscribeState(state => {
+            updateUI();
+        });
+
+        initLiveStats();
+        updateConversion();
+        setTimeout(updateUI, 500);
+    });
+</script>
+
+
+<style>
+
+    /* --- CONFIGURAÇÃO BASE --- */
+    .capy-responsivo {
+        display: block !important;
+        position: relative !important;
+        z-index: -1 !important;
+        max-width: absolute !important;
+    }
+
+    /* --- CENÁRIO 1: 1080p (Padrão) --- */
+    @media (min-width: 992px) {
+        .capy-responsivo {
+            width: 1200px !important;
+            margin-left: -138px !important;
+            margin-top: -470px !important;
+            margin-bottom: -10px !important;
+        }
+    }
+
+    /* --- CENÁRIO 2: Monitor 2K --- */
+    @media (min-width: 1921px) {
+        .capy-responsivo {
+            width: 1500px !important;
+            margin-left: -160px !important;
+            margin-top: -360px !important;
+            /* Mais para cima no 2K */
+            margin-bottom: -25px !important;
+        }
+    }
+
+    /* --- CENÁRIO 3: Monitor 4K --- */
+    @media (min-width: 2561px) {
+        .capy-responsivo {
+            width: 1800px !important;
+            margin-left: -210px !important;
+            margin-top: -350px !important;
+            margin-bottom: -25px !important;
+        }
+    }
+
+
+    /* 1. Define a animação de movimento (Fluido) */
+    @keyframes flowEnergy {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    /* 1. Animação de Fluxo Contínuo */
+    @keyframes flowEnergy {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        100% {
+            background-position: 200% 50%;
+        }
+        /* Move 200% para criar o loop */
+    }
+
+    /* 2. Estilo da Barra */
+    #progressBar {
+        /* Remove estilo padrão */
+        background-color: transparent !important;
+        /* Gradiente Cíclico: Começa e termina com a mesma cor (Azul) para o loop ser invisível */
+        background-image: linear-gradient( 90deg, #00C6FF 0%, /* Azul */
+        #2b0838 25%, /* Roxo Escuro */
+        #9d00ff 50%, /* Magenta (Meio/Brilho) */
+        #2b0838 75%, /* Roxo Escuro */
+        #00C6FF 100% /* Azul (Volta ao início) */
+        ) !important;
+        /* Tamanho maior que a barra para permitir o movimento */
+        background-size: 200% 100% !important;
+        /* Animação: 2 segundos, velocidade constante (linear), infinito */
+        animation: flowEnergy 2s linear infinite !important;
+        /* Brilho Neon */
+        box-shadow: 0 0 20px rgba(157, 0, 255, 0.6);
+        /* Suavidade ao mudar a porcentagem */
+        transition: width 0.6s ease;
+    }
+
+    .icon-left {
+        margin-right: 2px; /* ajusta a distância entre ícone e texto */
+        margin-left: -15px; /* empurra o ícone mais para a esquerda */
+    }
+
+    .token-card-3 {
+        /* Esta linha é crucial para o card ocupar toda a altura da coluna */
+        height: 100%;
+        /* Recomendação: Use flexbox dentro do card também, se precisar alinhar
+       o título/texto verticalmente ou empurrar algo para baixo. */
+        display: flex;
+        flex-direction: column;
+    }
+
+        /* Se você precisar que o parágrafo do texto ocupe o espaço extra: */
+        .token-card-3 p {
+            flex-grow: 1; /* Faz o parágrafo preencher o espaço vertical restante */
+        }
+
+    /* 1. Comportamento Padrão (Laptops/Desktops Full HD) */
+    /* Isso substitui o style="top: 11.5%" que estava no HTML */
+    .hero-bg-custom {
+        width: 100% !important;
+        margin-left: 0 !important;
+        /* --- CONTROLE DE ALTURA --- */
+        /* Teste valores drásticos para ver se move */
+        margin-top: -440px !important;
+        /* Puxa para CIMA */
+        /* Ajuste o que vem embaixo */
+        margin-bottom: 0 !important;
+    }
+
+    /* 3. Para Monitores 2K (Telas maiores que 1920px) */
+    @media (min-width: 2000px) {
+        .hero-bg-custom {
+            width: 100% !important;
+            margin-left: 0 !important;
+            /* --- CONTROLE DE ALTURA --- */
+            /* Teste valores drásticos para ver se move */
+            margin-top: -590px !important;
+            /* Puxa para CIMA */
+            /* Ajuste o que vem embaixo */
+            margin-bottom: 0 !important;
+        }
+
+        /* --- CENÁRIO 3: Monitor 4K --- */
+        @media (min-width: 2561px) {
+            .hero-bg-custom {
+                width: 100% !important;
+                margin-left: 0 !important;
+                margin-top: -850px !important;
+                margin-bottom: 0 !important;
+            }
+        }
+</style>
+<style>
+
+    /* --- Forçar Imagem para a Esquerda (Margem Negativa) --- */
+
+    .tokenomics-section-1__img--1 {
+        /* Mantenha o controle de tamanho que fizemos antes */
+        width: 1430px !important;
+        height: auto;
+        max-width: none !important; /* Permite que ela saia da caixa se necessário */
+        /* O TRUQUE AQUI: */
+        /* Comece com um valor negativo pequeno e vá aumentando até ficar bom */
+        /* Tente: -50px, depois -100px, depois -250px... */
+        margin-left: -300px !important;
+    }
+
+
+    /* --- AJUSTE EXTRA SÓ PARA MONITORES 2K / QHD --- */
+    /* Esta regra só ativa em telas maiores que 2000px de largura */
+    @media (min-width: 2000px) and (max-width: 3000px) {
+        .tokenomics-section-1__img--1 {
+            /* Aumente o negativo para jogar mais para a ESQUERDA */
+
+            margin-left: -500px !important;
+            /* Se precisar ir ainda mais: -600px !important; */
+            /* Se foi demais: -400px !important; */
+        }
+    }
+
+    /* ================================================= */
+    /* AJUSTE DA IMAGEM CTA (Rodapé/Chamada)             */
+    /* ================================================= */
+
+    .cta-img-custom {
+        /* 1. TAMANHO */
+        width: 870px !important;
+        max-width: none !important;
+        height: auto !important;
+        /* 2. POSIÇÃO (MOVER PARA DIREITA) */
+        /* Como ela já está na direita, o negativo puxa ela para FORA da tela */
+        /* Vá aumentando o número negativo (-50, -100, -150) para ir mais p/ direita */
+        margin-right: -100px !important;
+    }
+</style>
+
+<style>
+    /* --- 0. RESET GLOBAL E CORREÇÃO SAMSUNG/IPHONE --- */
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden; /* Trava a tela lateralmente */
+        -webkit-text-size-adjust: 100%;
+    }
+
+    /* --- 1. CONFIGURAÇÃO GERAL (CONTAINER) --- */
+    .hero-3 {
+        position: relative !important; /* Mantém a referência para a capivara */
+        width: 100%;
+        /* A CORREÇÃO DE ALTURA (Mágica do dvh) */
+        min-height: 100vh; /* Segurança para navegadores velhos */
+        min-height: 100dvh; /* Altura real dinâmica (ignora a barra do navegador) */
+        /* Garante que nada "vaze" para fora do container */
+        box-sizing: border-box;
+    }
+
+    .capy-mobile, .espaco-extra-mobile {
+        display: none !important; /* Escondidos no PC */
+    }
+
+    /* --- 2. CENÁRIO MOBILE (Telas menores que 991px) --- */
+    @media (max-width: 991px) {
+
+        /* Esconde a imagem do PC */
+        .capy-responsivo {
+            display: none !important;
+        }
+
+        /* ATIVA O CALÇO (O Bloco Invisível) */
+        .espaco-extra-mobile {
+            display: block !important;
+            width: 100%;
+            height: 20px; /* <--- CONTROLE A ALTURA DO ESPAÇO AQUI */
+            clear: both;
+        }
+
+        /* CONFIGURA A CAPIVARA */
+        .capy-mobile {
+            display: block !important;
+            width: 100% !important;
+            max-width: 230px;
+            position: absolute !important;
+            /* Mantendo suas posições exatas */
+            top: 160px;
+            right: -30px;
+            z-index: 0 !important;
+            margin: 0 !important;
+        }
+    }
+
+    /* --- 3. CORREÇÃO APENAS PARA TELAS MUITO ESTREITAS (S8+, SE, Mini) --- */
+    /* Mudei de 450px para 380px. */
+    /* Assim, iPhone 12, 13, 14, Pro Max (que têm +390px) CONTINUAM NORMAIS */
+    @media (max-width: 390px) {
+        .capy-mobile {
+            top: 240px !important; /* Desce só nos estreitos */
+            max-width: 190px !important;
+            right: -20px !important;
+        }
+    }
+</style>
+
+<style>
+
+    /* --- CENÁRIO MOBILE (Telas menores que 991px) --- */
+    @media (max-width: 991px) {
+
+        /* 1. O HERO (O PAI) */
+        .hero-3 {
+            /* Garante que o conteúdo não vaze */
+            overflow: hidden !important;
+            position: relative !important;
+            padding-bottom: 0 !important; /* Resetamos paddings extras */
+        }
+
+        /* 2. A IMAGEM DE FUNDO (Ajuste Manual) */
+        .hero-bg-custom {
+            display: block !important;
+            /* MUDANÇA DE ESTRATÉGIA: Relative em vez de Absolute */
+            /* Isso faz ela respeitar a gravidade e cair pro fundo do Hero sozinha */
+            position: relative !important;
+            /* Largura e Centralização */
+            width: 150% !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            /* --- A ALAVANCA DE POSIÇÃO (Use Margem Negativa) --- */
+            /* Como ela está no fim, usamos isso para puxá-la para CIMA, para trás do texto */
+            margin-top: 0 !important;
+            /* Ajustes Finais */
+            bottom: auto !important;
+            top: auto !important;
+            /* Visibilidade */
+            z-index: 0 !important; /* Atrás do texto, mas na frente do fundo */
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+</style>
+
+<style>
+
+    /* Correção para Galaxy S8 e telas estreitas */
+    @media (max-width: 400px) {
+        /* 1. Reduz a margem lateral para ganhar espaço */
+        .navbar .container {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+
+        /* 2. Força o Logo a diminuir */
+        .navbar-brand img,
+        .navbar-brand svg {
+            max-width: 110px !important; /* Ajuste esse número se necessário */
+            height: auto;
+        }
+
+        /* 3. Deixa o botão do menu (hambúrguer) mais compacto */
+        .navbar-toggler {
+            padding: 4px 8px !important; /* Menos 'gordura' no botão */
+            font-size: 0.9rem !important; /* Ícone um pouco menor */
+        }
+    }
+</style>
