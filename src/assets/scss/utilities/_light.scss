@@ -1,0 +1,69 @@
+[data-bs-theme="light"] {
+	// Shadow Color
+	--bs-box-shadow: 0px 10px 20px -4px rgba(145, 158, 171, 0.16);
+	--bs-primary-bg-subtle: #E6F5FD;
+	--bs-primary-text-emphasis: #006091;
+	--bs-secondary-bg-subtle: #FFFBE6;
+	--bs-secondary-text-emphasis: #9C8201;
+	--bs-danger-bg-subtle: #FEEAEF;
+	--bs-danger-text-emphasis: #971837;
+	--bs-warning-bg-subtle: #FEF7E6;
+	--bs-warning-text-emphasis: #966C00;
+	--bs-info-bg-subtle: #E6F9FF;
+	--bs-info-text-emphasis: #024153;
+	--bs-success-bg-subtle: #E8F9EE;
+	--bs-success-text-emphasis: #472E97;
+	--bs-light-bg-subtle: #F8F9FA;
+	--bs-light-text-emphasis: #495058;
+	--bs-dark-bg-subtle: #CED4DA;
+	--bs-dark-text-emphasis: #0D0E10;
+}
+
+body {
+	// A variável de cor que você usou, #472E97, é um bom ponto de transição
+	$roxo-escuro: #472E97;
+	$azul-brilhante: #00D0FF;
+	$roxo-magenta: #D900FF;
+
+	// Aplicação do Gradiente no corpo da página
+	background-image: linear-gradient(to right, $azul-brilhante, $roxo-escuro 50%, $roxo-magenta);
+	// Isso garante que o gradiente cubra toda a área
+	background-attachment: fixed;
+}
+
+/* --- Uniformização dos Elementos de Moeda (Tamanho do Ícone e Fonte) --- */
+
+$token-yellow-color: #FFC107;
+
+// 1. DEFINIÇÃO DA CLASSE DE COR
+.bg-token-yellow {
+	background-color: $token-yellow-color !important;
+	border-color: #000000 !important;
+}
+
+
+// 2. REGRAS DE LAYOUT, TAMANHO E FONTE
+#currentPayInCurrency,
+.input-group-text {
+	// LAYOUT E TAMANHO
+	display: flex !important;
+	align-items: center !important;
+	gap: 0.25rem;
+	padding: 0.5rem 0.75rem !important;
+	font-size: 1rem !important;
+	// COR E FONTE
+	color: #000000 !important;
+	font-weight: 500 !important; // Mantém a fonte uniforme
+}
+
+// 4. TAMANHO DOS ÍCONES (CORREÇÃO CRUCIAL: USANDO FONT-SIZE)
+// Aplica a regra a todos os elementos <iconify-icon> dentro dos contêineres relevantes
+#currentPayInIcon,
+.input-group-text iconify-icon,
+.dropdown-item iconify-icon {
+	// O font-size é o que realmente dimensiona o ícone SVG do Iconify
+	font-size: 25px !important;
+	// Mantemos width/height para o container, mas o font-size faz o ícone crescer
+	width: 24px !important;
+	height: 24px !important;
+}
